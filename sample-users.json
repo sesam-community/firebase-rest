@@ -1,0 +1,11 @@
+[
+  {
+    "_id": "0001",
+    "name": "Baard"
+  },
+  {
+    "_id": "0002",
+    "name": "Johannes",
+    "_deleted": true
+  }
+]
