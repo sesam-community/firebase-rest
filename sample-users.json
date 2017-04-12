@@ -1,7 +1,10 @@
 [
   {
     "_id": "0001",
-    "name": "Baard"
+    "name": "Baard",
+    "last-modified": {
+      ".sv": "timestamp"
+    }
   },
   {
     "_id": "0002",

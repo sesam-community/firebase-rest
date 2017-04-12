@@ -33,6 +33,7 @@ def get(path):
     entities = []
     for id, data in tree.items():
         entity = {"_id": id}
+        # TODO drop entities that has since eq since, startAt is fixed to greater than or equal
         if since_path and data.get(since_path) is not None:
             entity["_updated"] = data.get(since_path)
         for key, value in data.items():

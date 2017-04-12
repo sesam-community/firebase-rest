@@ -34,7 +34,7 @@ of your Firebase DB like this (in this case the source path is my-users, and mar
 }
 ```
 
-TODO support and document since and recommend Firebase.ServerValue.TIMESTAMP
+To make sure that Sesam never misses any entities when using since, we recommend that you add the since value using Firebase.ServerValue.TIMESTAMP.
 
 ## sinks
 The sink will PUT the entity under a key specified by the "_id" property of the entities it receives. The sink will DELETE entities that has the "_deleted" property
