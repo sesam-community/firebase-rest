@@ -31,9 +31,12 @@ def get(path):
     entities = []
     for id, data in tree.items():
         entity = {"_id": id}
-        # TODO drop entities that has since eq since, startAt is fixed to greater than or equal
         if since_path and data.get(since_path) is not None:
-            entity["_updated"] = data.get(since_path)
+            updated = data[since_path]
+            # drop entities that has exact since value, startAt is fixed to greater than or equal
+            if updated == since:
+                continue
+            entity["_updated"] = updated
         for key, value in data.items():
             entity[key] = value
         entities.append(entity)
@@ -42,7 +45,6 @@ def get(path):
 
 @app.route('/<path>', methods=['POST'])
 def post(path):
-    # TODO consider using HTTP PATCH to bulk load the changes, DELETEs still have to be one request per entity unless we want to delete the whole path
     entities = request.get_json()
     if isinstance(entities, dict):
         entities = [entities]
