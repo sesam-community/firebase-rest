@@ -9,7 +9,6 @@ scopes = ['https://www.googleapis.com/auth/firebase.database',
           'https://www.googleapis.com/auth/userinfo.email']
 instance = os.environ['PROJECT_ID']
 keyfile = json.loads(os.environ['KEYFILE'])
-token = None
 
 app = Flask(__name__)
 http_auth = None
@@ -64,7 +63,6 @@ def post(path):
 
 if __name__ == '__main__':
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile, scopes)
-    # TODO token can expire
-    token = credentials.get_access_token()
     http_auth = credentials.authorize(Http())
-    app.run(threaded=True, debug=True, host='0.0.0.0')
+    # http-instance cannot be shared between threads
+    app.run(threaded=False, debug=True, host='0.0.0.0')
