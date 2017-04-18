@@ -34,7 +34,7 @@ def get(path):
         if since_path and data.get(since_path) is not None:
             updated = data[since_path]
             # drop entities that has exact since value, startAt is fixed to greater than or equal
-            if updated == since:
+            if updated == str(since):
                 continue
             entity["_updated"] = updated
         for key, value in data.items():
