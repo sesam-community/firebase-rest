@@ -65,4 +65,4 @@ if __name__ == '__main__':
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile, scopes)
     token = credentials.get_access_token()
     http_auth = credentials.authorize(Http())
-    app.run(debug=True)
+    app.run(threaded=True, debug=True, host='0.0.0.0')
