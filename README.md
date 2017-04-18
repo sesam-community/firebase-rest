@@ -34,6 +34,8 @@ of your Firebase DB like this (in this case the source path is my-users, and mar
 }
 ```
 
+The path is passed as url parameter to the source. See example.
+
 To make sure that Sesam never misses any entities when using since, we recommend that you add the since value using Firebase.ServerValue.TIMESTAMP.
 
 ## sinks
@@ -55,7 +57,7 @@ If you want to create a server side value inside Firebase when writing entities,
 An example of system config: 
 
 ```json
-{
+[{
   "_id": "my-firebase",
   "type": "system:microservice",
   "docker": {
@@ -64,13 +66,22 @@ An example of system config:
           "type": "service_account",
           "..": ".."
       },
-      "PROJECT_ID": "my-firebase-instance",
-      "SINCE_PATH": "last-modified"
+      "PROJECT_ID": "my-firebase-instance"
     },
-    "image": "sesam/sesam-firebase-db:latest",
+    "image": "sesamcommunity/sesam-firebase-db:latest",
     "port": 5000
   }
-}
+},
+{
+  "_id": "my-foo-reader",
+  "type": "pipe",
+  "source": {
+    "type": "json",
+    "system": "my-firebase",
+    "supports_since": true,
+    "url": "/foo?since_path=last-modified"
+  }
+}]
 ```
 
 The keyfile is obtained by creating a key for the service account in the Firebase console (request a JSON keyfile).

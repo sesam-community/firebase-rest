@@ -9,7 +9,6 @@ scopes = ['https://www.googleapis.com/auth/firebase.database',
           'https://www.googleapis.com/auth/userinfo.email']
 instance = os.environ['PROJECT_ID']
 keyfile = json.loads(os.environ['KEYFILE'])
-since_path = os.environ.get('SINCE_PATH')
 token = None
 
 app = Flask(__name__)
@@ -18,8 +17,8 @@ http_auth = None
 
 @app.route('/<path>', methods=['GET'])
 def get(path):
-    # TODO should be a way to override since_path per source
     since = request.args.get('since')
+    since_path = request.args.get('since_path')
     query = ""
     if since_path and since is not None:
         query = "?orderBy=\"%s\"&startAt=%s" % (since_path, since)
@@ -46,6 +45,8 @@ def get(path):
 def post(path):
     # TODO consider using HTTP PATCH to bulk load the changes, DELETEs still have to be one request per entity unless we want to delete the whole path
     entities = request.get_json()
+    if isinstance(entities, dict):
+        entities = [entities]
     for entity in entities:
         id = entity["_id"]
         if not entity.get("_deleted", False):
@@ -63,6 +64,7 @@ def post(path):
 
 if __name__ == '__main__':
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile, scopes)
+    # TODO token can expire
     token = credentials.get_access_token()
     http_auth = credentials.authorize(Http())
     app.run(threaded=True, debug=True, host='0.0.0.0')
