@@ -11,7 +11,7 @@ script: true
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t sesam-community/sesam-firebase-db .;
+    docker build -t sesamcommunity/sesam-firebase-db .;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push sesam-community/sesam-firebase-db:latest;
+    docker push sesamcommunity/sesam-firebase-db:latest;
     fi
