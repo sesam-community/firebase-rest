@@ -1,5 +1,9 @@
-# sesam-firebase
+# sesam-firebase-db
 Reads and writes streams of entities to Firebase Realtime DB.
+
+[![Build Status](https://travis-ci.org/sesam-community/sesam-firebase-db.svg?branch=master)](https://travis-ci.org/sesam-community/sesam-firebase-db)
+
+Implemented using the Firebase REST API.
 
 Sinks and sources defines a path to where in the Firebase DB tree the data should be read or written to.
 
